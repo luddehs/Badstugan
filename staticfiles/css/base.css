@@ -2,15 +2,36 @@ html {
     height: 100%;
 }
 
-body {
-    background: url('/media/badstuga-inne.jpg') no-repeat center center fixed;
-    background-size: cover;
-    height: calc(100vh - 164px);
-    color: #555;
-    font-family: 'Averia Libre', sans-serif;
+/* -------------------------------- Navbar Customizations */
+
+/* Center the logo and menu items */
+#topnav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-/* from Bulma */
+#topnav .main-logo-link {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.logo-font {
+    text-transform: uppercase;
+}
+
+.logo-font a, 
+.logo-font a:hover, 
+.logo-font a:visited {
+    color: black;
+    text-decoration: none;
+    font-size: 2.0rem;
+}
+
 .icon {
     align-items: center;
     display: inline-flex;
@@ -19,12 +40,35 @@ body {
     width: 1.5rem;
 }
 
-.logo-font {
-    text-transform: uppercase;
+#topnav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
-.main-logo-link {
-    width: fit-content;
+#topnav ul li {
+    margin: 0 15px;
+}
+
+#topnav ul li .nav-link div {
+    font-size: 0.9rem;
+}
+
+#topnav ul li .nav-link i {
+    font-size: 1.2rem;
+}
+
+/* -------------------------------- Body */
+
+body {
+    background: url('/media/badstuga-inne.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: calc(100vh - 164px);
+    color: #555;
+    font-family: 'Averia Libre', sans-serif;
 }
 
 .shop-now-button {
@@ -57,18 +101,18 @@ body {
 }
 
 .overlay {
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
-	position: fixed;
-	background: white;
-	z-index: -1;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: white;
+    z-index: -1;
 }
 
 .card-img-top {
     width: 100%;
-    height: 200px; /* Adjust this value to your desired height */
+    height: 200px;
     object-fit: cover;
 }
 
@@ -93,5 +137,16 @@ body {
 
     .header-container {
         padding-top: 164px;
+    }
+}
+
+/* Media query for responsive design */
+@media (max-width: 991px) {
+    #topnav ul {
+        flex-direction: column;
+    }
+
+    #topnav ul li {
+        margin: 10px 0;
     }
 }

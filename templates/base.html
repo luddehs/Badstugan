@@ -39,79 +39,93 @@
   </head>
   <body>
     <header class="container-fluid fixed-top">
-        <div id="topnav" class="row bg-white pt-lg-2 d-flex">
-          <div class="col-12 col-lg-6 my-auto py-1 py-lg-0 text-center text-lg-left">
-              <a href="{% url 'home' %}" class="nav-link main-logo-link">
-                  <h2 class="logo-font text-black my-0"><strong>Badstugan</strong></h2>
-              </a>
-          </div>
-          <div class="col-12 col-lg-6 my-auto py-1 py-lg-0">
-              <ul class="list-inline list-unstyled text-center text-lg-right my-0">
-                <li class="list-inline-item dropdown">
-                    <a class="text-black nav-link" href="#" id="booking-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="text-center">
-                            <div><i class="fa-solid fa-calendar-days"></i></i></div>
-                            <p class="my-0">Booking</p>
+        <div id="topnav" class="row bg-white pt-lg-2 d-flex flex-column align-items-center">
+            <!-- Logo Section -->
+            <div class="col-12 text-center py-2">
+                <div class="main-logo-link">
+                    <h2 class="logo-font text-black my-0">
+                        <a href="{% url 'home' %}" class="nav-link d-inline-block">
+                            <strong>Badstugan</strong>
+                        </a>
+                    </h2>
+                </div>
+            </div>
+    
+            <!-- Navigation Section -->
+            <div class="col-12 py-1">
+                <ul class="list-inline list-unstyled text-center mb-0">
+                    <!-- Booking Dropdown -->
+                    <li class="list-inline-item dropdown">
+                        <a class="text-black nav-link" href="#" id="booking-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="text-center">
+                                <div><i class="fa-solid fa-calendar-days"></i></div>
+                                <p class="my-0">Booking</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu border-0" aria-labelledby="booking-options">
+                            <a href="#" class="dropdown-item">Single Ticket</a>
+                            <a href="#" class="dropdown-item">Private Sauna</a>
+                            <a href="#" class="dropdown-item">Membership</a>
                         </div>
-                    </a>
-                    <div class="dropdown-menu border-0" aria-labelledby="booking-options">
-                        <a href="#" class="dropdown-item">Single Ticket</a>
-                        <a href="#" class="dropdown-item">Private Sauna</a>
-                    </div>
-                </li>  
-                  <li class="list-inline-item">
-                    <a class="text-black nav-link" href="#">
-                        <div class="text-center">
-                            <div><i class="fa-solid fa-house-chimney-window"></i></div>
-                            <p class="my-0">About Us</p>
+                    </li>
+    
+                    <!-- About Us Dropdown -->
+                    <li class="list-inline-item dropdown">
+                        <a class="text-black nav-link" href="#" id="about-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="text-center">
+                                <div><i class="fa-solid fa-house-chimney-window"></i></div>
+                                <p class="my-0">About Us</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu border-0" aria-labelledby="about-options">
+                            <a href="#" class="dropdown-item">Our Saunas</a>
+                            <a href="#" class="dropdown-item">Story</a>
+                            <a href="#" class="dropdown-item">FAQ</a>
                         </div>
-                    </a>
-                  </li>
-                  <li class="list-inline-item dropdown">
-                      <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <div class="text-center">
-                              <div><i class="fas fa-user fa-lg"></i></div>
-                              <p class="my-0">Membership</p>
-                          </div>
-                      </a>
-                      <div class="dropdown-menu border-0" aria-labelledby="user-options">
-                          {% if request.user.is_authenticated %}
-                              {% if request.user.is_superuser %}
-                                  <a href="" class="dropdown-item">Product Management</a>
-                              {% endif %}
-                              <a href="" class="dropdown-item">Membership</a>
-                              <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
-                          {% else %}
-                              <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
-                              <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
-                          {% endif %}
-                      </div>
-                  </li>
-                  <li class="list-inline-item">
-                      <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="">
-                          <div class="text-center">
-                              <div><i class="fas fa-shopping-bag fa-lg"></i></div>
-                              <p class="my-0">
-                                  {% if grand_total %}
-                                      ${{ grand_total|floatformat:2 }}
-                                  {% else %}
-                                      $0.00
-                                  {% endif %}
-                              </p>
-                          </div>
-                      </a>
-                  </li>
-              </ul>
-          </div>
-      </div>
-        <!-- COMMENT
-        <div id="delivery-banner" class="row text-center">
-            <div class="col bg-black text-white">
-                <h4 class="logo-font my-1">ENTER A MESSAGE?!{{ free_shipping_threshold }}!</h4>                
-            </div>            
+                    </li>
+    
+                    <!-- User Dropdown -->
+                    <li class="list-inline-item dropdown">
+                        <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="text-center">
+                                <div><i class="fas fa-user fa-lg"></i></div>
+                                <p class="my-0">Profile</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu border-0" aria-labelledby="user-options">
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.is_superuser %}
+                                    <a href="" class="dropdown-item">Product Management</a>
+                                {% endif %}
+                                <a href="" class="dropdown-item">Membership</a>
+                                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                            {% else %}
+                                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                                <a href="{% url 'account_login' %}" class="dropdown-item">Log In</a>
+                            {% endif %}
+                        </div>
+                    </li>
+    
+                    <!-- Cart Section -->
+                    <li class="list-inline-item">
+                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="">
+                            <div class="text-center">
+                                <div><i class="fas fa-shopping-bag fa-lg"></i></div>
+                                <p class="my-0">
+                                    {% if grand_total %}
+                                        ${{ grand_total|floatformat:2 }}
+                                    {% else %}
+                                        $0.00
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-         -->
-  </header>
+    </header>
+    
 
      {% if messages %}
         <div class="message-container"></div>
