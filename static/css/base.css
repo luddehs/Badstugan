@@ -17,19 +17,23 @@ html {
     display: block;
     text-align: center;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .logo-font {
     text-transform: uppercase;
 }
 
-.logo-font a, 
+.logo-font a {
+    color: black;
+    text-decoration: none;
+    font-size: 2.0rem;
+}
+
 .logo-font a:hover, 
 .logo-font a:visited {
     color: black;
     text-decoration: none;
-    font-size: 2.0rem;
 }
 
 .icon {
@@ -59,6 +63,22 @@ html {
 
 #topnav ul li .nav-link i {
     font-size: 1.2rem;
+}
+
+.dropdown-menu {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: 100% !important;
+    margin-top: 0.5rem;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu .dropdown-item {
+    width: 100%;
+    white-space: normal;
 }
 
 /* -------------------------------- Body */
@@ -141,7 +161,7 @@ body {
 }
 
 /* Media query for responsive design */
-@media (max-width: 991px) {
+@media (max-width: 470px) {
     #topnav ul {
         flex-direction: column;
     }
