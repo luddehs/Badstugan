@@ -2,26 +2,57 @@
 {% load static %}
 
 {% block page_header %}
-    <div class="container header-container">
-        <div class="row">
-            <div class="col"></div>
-        </div>
+    <div class="container header-container text-center my-5">
+        <h1 class="display-3 text-black">Welcome to Badstugan</h1>
+        <p class="lead text-muted">Experience the ultimate relaxation with our exclusive saunas and services.</p>
+        <a href="#" class="btn btn-lg shop-now-button mt-3">Book a visit</a>
     </div>
 {% endblock %}
 
 {% block content %}
-    <div class="container h-100">
-        <div class="row h-100">
-            <div class="col-7 col-md-6 my-auto">
-                <h1 class="display-4 logo-font text-white">
-                    The new suanas are here
-                </h1>
-                <div class="my-5">
-                    <h4>
-                        <a href="" class="shop-now-button btn btn-lg rounded-0 text-uppercase py-3">Book a visit!</a>
-                    </h4>
-                </div>
+    <div class="container my-5">
+        
+        <!-- Featured Image Section -->
+        <div class="row">
+            <div class="col">
+                <img src="{% static 'images/badstuga-inne.jpg' %}" class="img-fluid w-100 mb-5" alt="Sauna Interior">
             </div>
         </div>
+
+        <!-- Our Saunas Section -->
+        <div class="row text-center my-5">
+            <div class="col">
+                <h2 class="display-4 text-black">Our Saunas</h2>
+                <p class="lead text-muted">Explore our selection of unique saunas designed to offer a serene and rejuvenating experience.</p>
+            </div>
+        </div>
+
+        <!-- Sauna Cards Section -->
+        <div class="row text-center mb-5">
+            {% for i in "1234" %}
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Sauna {{ i }}</h5>
+                        <p class="card-text">Enjoy the warmth and tranquility in our custom sauna, crafted for relaxation.</p>
+                        <a href="#" class="btn btn-black">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+        <!-- About Us Section -->
+        <div class="row text-center my-5">
+            <div class="col">
+                <h2 class="display-4 text-black">What We're About</h2>
+                <p class="lead text-muted">
+                    Badstugan is committed to creating a peaceful and memorable sauna experience that prioritizes your well-being. Join our community and become part of a tradition that values relaxation, health, and connection.
+                </p>
+                <a href="#" class="btn btn-lg shop-now-button mt-3">Become a Member</a>
+            </div>
+        </div>
+
     </div>
 {% endblock %}

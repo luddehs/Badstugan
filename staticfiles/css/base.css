@@ -83,12 +83,16 @@ html {
 
 /* -------------------------------- Body */
 
-body {
+/* Home Page Background */
+.home-page-body {
     background: url('/media/badstuga-inne.jpg') no-repeat center center fixed;
     background-size: cover;
-    height: calc(100vh - 164px);
     color: #555;
-    font-family: 'Averia Libre', sans-serif;
+}
+
+/* Section Styles */
+.header-container {
+    padding-top: 6rem;
 }
 
 .shop-now-button {
@@ -128,6 +132,16 @@ body {
     position: fixed;
     background: white;
     z-index: -1;
+}
+
+
+.card {
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card-img-top {
