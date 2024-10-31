@@ -81,7 +81,7 @@ The live link can be found here - [Badstugan]()
 
  <summary>Home Page</summary>
 
-![Home Page](docs/wireframes/)
+![Home Page](docs/wireframes/homepage-wireframe.png)
 </details>
 
 
