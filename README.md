@@ -84,7 +84,33 @@ The live link can be found here - [Badstugan]()
 ![Home Page](docs/wireframes/homepage-wireframe.png)
 </details>
 
+<details>
 
+ <summary>Booking Page</summary>
+
+![Booking Page](docs/wireframes/booking-wireframe.png)
+</details>
+
+<details>
+
+ <summary>Content Page</summary>
+
+![Content Page](docs/wireframes/content-wireframe.png)
+</details>
+
+<details>
+
+ <summary>Profile Page</summary>
+
+![Profile Page](docs/wireframes/profile-wireframe.png)
+</details>
+
+<details>
+
+ <summary>Checkout Page</summary>
+
+![Checkout Page](docs/wireframes/checkout-wireframe.png)
+</details>
 
 ## Agile Methodology
 ![here]()
