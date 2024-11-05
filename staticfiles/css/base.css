@@ -4,6 +4,16 @@ html {
 
 /* -------------------------------- Navbar Customizations */
 
+body {
+    background-color: #efebe3;
+    font-family: "Averia Libre", system-ui;
+    color: #413a34;
+}
+
+header {
+    background-color: #dfd2b9;
+}
+
 /* Center the logo and menu items */
 #topnav {
     display: flex;
@@ -21,18 +31,19 @@ html {
 }
 
 .logo-font {
+    color: rgb(16, 70, 205);
     text-transform: uppercase;
 }
 
 .logo-font a {
-    color: black;
+    color: rgb(16, 70, 205);
     text-decoration: none;
     font-size: 2.0rem;
 }
 
 .logo-font a:hover, 
 .logo-font a:visited {
-    color: black;
+    color: rgb(16, 70, 205);
     text-decoration: none;
 }
 
@@ -42,6 +53,10 @@ html {
     justify-content: center;
     height: 1.5rem;
     width: 1.5rem;
+}
+
+.icon-color {
+    color: rgb(16, 70, 205);
 }
 
 #topnav ul {
@@ -152,14 +167,12 @@ html {
 
 /* -------------------------------- Media Queries */
 
-/* Slightly larger container on xl screens */
 @media (min-width: 1200px) {
   .container {
     max-width: 80%;
   }
 }
 
-/* fixed top navbar only on medium and up */
 @media (min-width: 992px) {
     .fixed-top-desktop-only {
         position: fixed;
@@ -174,7 +187,6 @@ html {
     }
 }
 
-/* Media query for responsive design */
 @media (max-width: 470px) {
     #topnav ul {
         flex-direction: column;
