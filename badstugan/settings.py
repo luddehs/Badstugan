@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '8000-luddehs-badstugan-0uhxvemzzm3.ws.codeinstitute-ide.net', '8000-luddehs-badstugan-jaqdxn52zeg.ws.codeinstitute-ide.net', '.herokuapp.com']
 
-CSRF_TRUSTED_ORIGINS = ['http://8000-luddehs-badstugan-0uhxvemzzm3.ws.codeinstitute-ide.net', 'https://8000-luddehs-badstugan-0uhxvemzzm3.ws.codeinstitute-ide.net']
+CSRF_TRUSTED_ORIGINS = ['http://8000-luddehs-badstugan-0uhxvemzzm3.ws.codeinstitute-ide.net', 'https://8000-luddehs-badstugan-0uhxvemzzm3.ws.codeinstitute-ide.net', 'https://8000-luddehs-badstugan-jaqdxn52zeg.ws.codeinstitute-ide.net']
 
 
 # Application definition
