@@ -11,7 +11,14 @@ class ProductAdmin(admin.ModelAdmin):
         'location',
         'image',
     )
-    ordering = ('name',)
+    ordering = ('sku',)
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = (
+        'friendly_name',
+        'name',
+        'description',
+    )
 
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
