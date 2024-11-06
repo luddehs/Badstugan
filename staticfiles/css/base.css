@@ -10,15 +10,12 @@ body {
     color: #413a34;
 }
 
-header {
-    background-color: #dfd2b9;
-}
-
 /* Center the logo and menu items */
 #topnav {
+    background-color: #efebe3 !important;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center;s
     justify-content: center;
     text-align: center;
 }

@@ -12,9 +12,10 @@ body {
 
 /* Center the logo and menu items */
 #topnav {
+    background-color: #efebe3 !important;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center;s
     justify-content: center;
     text-align: center;
 }
@@ -93,13 +94,6 @@ body {
 }
 
 /* -------------------------------- Body */
-
-/* Home Page Background */
-.home-page-body {
-    background: url('/media/badstuga-inne.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #555;
-}
 
 /* Section Styles */
 .header-container {
