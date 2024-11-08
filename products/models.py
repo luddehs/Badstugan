@@ -1,5 +1,3 @@
-# products/models.py
-
 from django.db import models
 
 class Category(models.Model):
@@ -27,3 +25,23 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_first_image(self):
+        first_image = self.product_images.first()
+        return first_image.image if first_image else self.image
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product,
+        related_name='product_images',
+        on_delete=models.CASCADE
+    )
+    image = models.ImageField(upload_to='products/')
+    order = models.IntegerField(default=1)
+    is_main = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"Image {self.order} for {self.product.name}"
