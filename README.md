@@ -1,6 +1,6 @@
 # Badstugan
 
-Intro
+Sorry about the mess, we are under construction!
 
 Stripe's documentation [here]().
 
