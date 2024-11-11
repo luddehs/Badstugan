@@ -43,7 +43,7 @@
                                         {% if product.product_images.all %}
                                             {% for prod_image in product.product_images.all %}
                                                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                                    <a href="">
+                                                    <a href="{% url 'product_detail' product.id %}">
                                                         <img class="card-img-top img-fluid" 
                                                              src="{{ prod_image.image.url }}" 
                                                              alt="{{ product.name }}">
@@ -52,7 +52,7 @@
                                             {% endfor %}
                                         {% elif product.image %}
                                             <div class="carousel-item active">
-                                                <a href="">
+                                                <a href="{% url 'product_detail' product.id %}">
                                                     <img class="card-img-top img-fluid" 
                                                          src="{{ product.image.url }}" 
                                                          alt="{{ product.name }}">
@@ -60,10 +60,10 @@
                                             </div>
                                         {% else %}
                                             <div class="carousel-item active">
-                                                <a href="">
+                                                <a href="{% url 'product_detail' product.id %}">
                                                     <img class="card-img-top img-fluid" 
                                                          src="{{ MEDIA_URL }}noimage.png" 
-                                                         alt="{{ product.name }}">
+                                                         alt="No image available for {{ product.name }}">
                                                 </a>
                                             </div>
                                         {% endif %}
@@ -81,8 +81,10 @@
                                     {% endif %}
                                 </div>
 
+                                <!-- Product Name and Description -->
                                 <div class="card-body pb-0">
-                                    <p class="mb-0">{{ product.name }}</p>
+                                    <p class="mb-0 font-weight-bold">{{ product.name }}</p>
+                                    <p class="text-muted">{{ product.description }}</p>
                                 </div>
                             </div>
                         </div>
