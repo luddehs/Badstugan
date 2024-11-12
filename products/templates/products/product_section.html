@@ -1,0 +1,114 @@
+<div class="row text-center mb-5">
+    {% for product in products|slice:":4" %} <!-- Slice to limit items if needed -->
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
+            <div class="card h-100 border-0">
+                <!-- Carousel -->
+                <div id="carousel-{{ product.id }}" class="carousel slide" data-ride="carousel">
+                    <!-- Carousel Indicators -->
+                    <ol class="carousel-indicators">
+                        {% if product.product_images.all %}
+                            {% for image in product.product_images.all %}
+                                <li data-target="#carousel-{{ product.id }}" 
+                                    data-slide-to="{{ forloop.counter0 }}" 
+                                    {% if forloop.first %}class="active"{% endif %}></li>
+                            {% endfor %}
+                        {% endif %}
+                    </ol>
+                    
+                    <!-- Carousel Items -->
+                    <div class="carousel-inner">
+                        {% if product.product_images.all %}
+                            {% for prod_image in product.product_images.all %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <a href="#" data-toggle="modal" data-target="#productModal{{ product.id }}">
+                                        <img class="card-img-top img-fluid" 
+                                             src="{{ prod_image.image.url }}" 
+                                             alt="{{ product.name }}">
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% elif product.image %}
+                            <div class="carousel-item active">
+                                <a href="#" data-toggle="modal" data-target="#productModal{{ product.id }}">
+                                    <img class="card-img-top img-fluid" 
+                                         src="{{ product.image.url }}" 
+                                         alt="{{ product.name }}">
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="carousel-item active">
+                                <a href="#" data-toggle="modal" data-target="#productModal{{ product.id }}">
+                                    <img class="card-img-top img-fluid" 
+                                         src="{{ MEDIA_URL }}noimage.png" 
+                                         alt="No image available for {{ product.name }}">
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if product.product_images.all|length > 1 %}
+                        <a class="carousel-control-prev" href="#carousel-{{ product.id }}" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carousel-{{ product.id }}" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- Product Name and Description -->
+                <div class="card-body pb-0">
+                    <p class="mb-0 font-weight-bold">{{ product.name }}</p>
+                    <p class="text-muted">{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Structure -->
+        <div class="modal fade" id="productModal{{ product.id }}" tabindex="-1" role="dialog" aria-labelledby="productModalLabel{{ product.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel{{ product.id }}">{{ product.name }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!-- Main Image -->
+                                    <div id="modalCarousel-{{ product.id }}" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            {% for prod_image in product.product_images.all %}
+                                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                    <img class="d-block w-100" src="{{ prod_image.image.url }}" alt="{{ product.name }}">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <a class="carousel-control-prev" href="#modalCarousel-{{ product.id }}" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#modalCarousel-{{ product.id }}" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ product.description }}</p>
+                                    <p><strong>Price:</strong> ${{ product.price }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+</div>
