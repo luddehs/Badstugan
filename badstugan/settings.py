@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+import dj_database_url
 from pathlib import Path
 
 
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-3e-&h40pua4h9)5fuz^7#28+mi!kdd8z*d_didasftdc=gk^0&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com', '8000-luddehs-badstugan-82i36uo6ijm.ws.codeinstitute-ide.net']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'luddehs-badstugan.herokuapp.com', '8000-luddehs-badstugan-82i36uo6ijm.ws.codeinstitute-ide.net']
 
 CSRF_TRUSTED_ORIGINS = ['https://8000-luddehs-badstugan-82i36uo6ijm.ws.codeinstitute-ide.net']
 
@@ -109,12 +110,17 @@ WSGI_APPLICATION = 'badstugan.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url(os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
