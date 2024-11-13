@@ -1,1 +1,1 @@
-web: gunicorn badstugan.wsgi
+web: gunicorn badstugan.wsgi:application
