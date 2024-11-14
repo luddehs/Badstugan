@@ -60,7 +60,9 @@
 
                 <!-- Product Name and Description -->
                 <div class="card-body pb-0">
-                    <p class="mb-0 font-weight-bold">{{ product.name }}</p>
+                    <p class="mb-0 font-weight-bold">
+                        <a href="{% url 'product_detail' product.id %}" class="text-dark">{{ product.name }}</a>
+                    </p>
                     <p class="text-muted">{{ product.description }}</p>
                 </div>
             </div>
@@ -102,6 +104,7 @@
                                 <div class="col-md-6">
                                     <p>{{ product.description }}</p>
                                     <p><strong>Price:</strong> ${{ product.price }}</p>
+                                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
                                 </div>
                             </div>
                         </div>

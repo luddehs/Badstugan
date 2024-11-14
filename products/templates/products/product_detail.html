@@ -6,5 +6,10 @@
     <h1>{{ product.name }}</h1>
     <p>{{ product.description }}</p>
     <p>Price: ${{ product.price }}</p>
+    <p>Location: {{ product.location }}</p>
+    {% if product.category %}
+        <p>Category: {{ product.category.name }}</p>
+    {% endif %}
+    <a href="#" class="btn btn-primary">Book Now</a>
 </div>
 {% endblock %}
