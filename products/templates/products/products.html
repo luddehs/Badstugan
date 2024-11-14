@@ -18,9 +18,29 @@
                 <hr class="w-50 mb-1">
             </div>
         </div>
-        
+
         <!-- Include the Product Section -->
         {% include "products/product_section.html" %}
+
+        <!-- Add this before your product_section.html include -->
+        <div class="container mb-4">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="btn-group" role="group" aria-label="Product filters">
+                        <a href="{% url 'products' %}" class="btn {% if not current_category %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                            All Saunas
+                        </a>
+                        <a href="{% url 'products' %}?category=private-sauna" class="btn {% if current_category == 'private-sauna' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                            Private Saunas
+                        </a>
+                        <a href="{% url 'products' %}?category=single-ticket" class="btn {% if current_category == 'single-ticket' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                            Single Tickets
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 {% endblock %}

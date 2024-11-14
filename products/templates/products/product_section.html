@@ -1,6 +1,6 @@
-<div class="row text-center mb-5">
-    {% for product in products|slice:":4" %} <!-- Slice to limit items if needed -->
-        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
+<div class="row text-center mb-5 justify-content-center mx-0">
+    {% for product in products|slice:":4" %}
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 px-2 mb-4">
             <div class="card h-100 border-0">
                 <!-- Carousel -->
                 <div id="carousel-{{ product.id }}" class="carousel slide" data-ride="carousel">
