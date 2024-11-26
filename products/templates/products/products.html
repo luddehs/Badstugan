@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center mt-3">
-                <h2 class="logo-font">Our Suanas</h2>
+                <h2 class="logo-font">Our Saunas</h2>
                 <hr class="w-50 mb-1">
             </div>
         </div>
@@ -40,6 +40,21 @@
             </div>
         </div>
 
+        <!-- Add Category Description -->
+        {% if current_category %}
+            {% for category in categories %}
+                {% if category.name == current_category %}
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-8 col-lg-6 text-center my-3">
+                            <h3>{{ category.friendly_name }}</h3>
+                            {% if category.description %}
+                                <p class="lead">{{ category.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
 
     </div>
 {% endblock %}
