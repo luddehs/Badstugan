@@ -187,7 +187,6 @@ document.getElementById('booking_date').addEventListener('change', function() {
         });
 });
 
-// Add new event listener for time slot changes
 document.getElementById('time_slot').addEventListener('change', function() {
     const selectedOption = this.options[this.selectedIndex];
     const quantityInput = document.getElementById('id_qty_{{ product.id }}');
@@ -195,7 +194,6 @@ document.getElementById('time_slot').addEventListener('change', function() {
     const sessionLimit = parseInt('{{ product.session_limit }}');
     
     if (remainingCapacity) {
-        // Use the smaller of remaining capacity or session limit
         const maxGuests = Math.min(sessionLimit, remainingCapacity);
         quantityInput.max = maxGuests;
         quantityInput.value = Math.min(quantityInput.value, maxGuests);

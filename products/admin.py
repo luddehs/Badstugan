@@ -1,6 +1,10 @@
 from django.core.exceptions import ValidationError
 from django.contrib import admin
+from django.db import models
 from .models import Product, Category, ProductImage, TimeSlot
+from .utils import generate_time_slots
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
@@ -36,6 +40,23 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('image_url', 'image')
         }),
     )
+    actions = ['generate_next_week_slots']
+
+    def generate_next_week_slots(self, request, queryset):
+        start_date = timezone.now().date()
+        end_date = start_date + timedelta(days=7)
+        
+        slots_created = 0
+        for product in queryset:
+            if product.category and product.category.name == 'shared-sauna':
+                generate_time_slots(product, start_date, end_date)
+                slots_created += 1
+        
+        self.message_user(
+            request,
+            f'Generated time slots for {slots_created} products'
+        )
+    generate_next_week_slots.short_description = "Generate next week's time slots"
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
@@ -45,12 +66,24 @@ class CategoryAdmin(admin.ModelAdmin):
     )
 
 class TimeSlotAdmin(admin.ModelAdmin):
-    list_display = ('product', 'start_time', 'end_time', 'duration_display', 'is_booked', 'is_past', 'has_conflicts')
+    list_display = (
+        'product',
+        'start_time',
+        'end_time',
+        'duration_display',
+        'is_booked',
+        'is_past',
+        'remaining_capacity'
+    )
     list_filter = ('product', 'is_booked', 'start_time')
     search_fields = ('product__name',)
     ordering = ('start_time',)
-    list_editable = ('is_booked',)
-    readonly_fields = ('is_past', 'duration_display', 'has_conflicts')
+    
+    def remaining_capacity(self, obj):
+        total_bookings = obj.bookings.aggregate(
+            total=models.Sum('quantity'))['total'] or 0
+        return obj.product.capacity - total_bookings
+    remaining_capacity.short_description = 'Remaining Capacity'
 
     def duration_display(self, obj):
         hours = obj.duration.total_seconds() / 3600

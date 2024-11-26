@@ -11,9 +11,21 @@ class Category(models.Model):
     friendly_name = models.CharField(max_length=254, blank=True, null=True)
     name = models.CharField(max_length=254)
     description = models.TextField(blank=True, null=True)
+    weekday_opening = models.TimeField(default='06:00')
+    weekday_closing = models.TimeField(default='22:00')
+    weekend_opening = models.TimeField(default='08:00')
+    weekend_closing = models.TimeField(default='22:00')
 
     def __str__(self):
         return self.name
+
+    def get_opening_hours(self, date):
+        """Return opening and closing times for a specific date"""
+        is_weekend = date.weekday() >= 5  # 5 = Saturday, 6 = Sunday
+        return (
+            self.weekend_opening if is_weekend else self.weekday_opening,
+            self.weekend_closing if is_weekend else self.weekday_closing
+        )
 
 
 class Product(models.Model):
