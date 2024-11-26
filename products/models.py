@@ -23,7 +23,11 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL, related_name="products")
     location = models.CharField(max_length=254, default="Unknown Location")
-    capacity = models.PositiveIntegerField(default=1, help_text="Maximum number of guests allowed")
+    capacity = models.PositiveIntegerField(default=1, help_text="Maximum number of guests allowed in total")
+    session_limit = models.PositiveIntegerField(
+        default=4, 
+        help_text="Maximum number of guests allowed per booking session (e.g., 4 for shared saunas)"
+    )
     image_url = models.URLField(max_length=1024, blank=True, null=True)
     image = models.ImageField(upload_to="products/", blank=True, null=True)
 

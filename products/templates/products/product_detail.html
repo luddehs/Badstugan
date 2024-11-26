@@ -89,6 +89,7 @@
                             <p><i class="fas fa-tag text-muted"></i> {{ product.category.friendly_name }}</p>
                         {% endif %}
                         <p><i class="fas fa-users text-muted"></i> Maximum capacity: {{ product.capacity }} guests</p>
+                        <p><i class="fas fa-user-friends text-muted"></i> Maximum per booking: {{ product.session_limit }} guests</p>
                     </div>
                 </div>
 
@@ -191,12 +192,15 @@ document.getElementById('time_slot').addEventListener('change', function() {
     const selectedOption = this.options[this.selectedIndex];
     const quantityInput = document.getElementById('id_qty_{{ product.id }}');
     const remainingCapacity = selectedOption.dataset.remainingCapacity;
+    const sessionLimit = parseInt('{{ product.session_limit }}');
     
     if (remainingCapacity) {
-        quantityInput.max = remainingCapacity;
-        quantityInput.value = Math.min(quantityInput.value, remainingCapacity);
+        // Use the smaller of remaining capacity or session limit
+        const maxGuests = Math.min(sessionLimit, remainingCapacity);
+        quantityInput.max = maxGuests;
+        quantityInput.value = Math.min(quantityInput.value, maxGuests);
         document.getElementById('capacity_display').textContent = 
-            `Available spots: ${remainingCapacity}`;
+            `Available spots: ${remainingCapacity} (Max ${sessionLimit} per booking)`;
     }
 });
 </script>

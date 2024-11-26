@@ -16,15 +16,26 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'sku',
         'name',
-        'description',
-        'price',
         'category',
-        'location',
+        'price',
         'capacity',
-        'image',
+        'session_limit',
+        'location',
     )
     ordering = ('sku',)
     inlines = [ProductImageInline, TimeSlotInline]
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('sku', 'name', 'description', 'category', 'price', 'location')
+        }),
+        ('Capacity Settings', {
+            'fields': ('capacity', 'session_limit'),
+            'description': 'Set total capacity and per-session booking limits'
+        }),
+        ('Images', {
+            'fields': ('image_url', 'image')
+        }),
+    )
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
