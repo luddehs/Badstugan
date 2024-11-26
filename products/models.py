@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
+from datetime import timedelta
 
 class Category(models.Model):
 
@@ -64,3 +66,22 @@ class TimeSlot(models.Model):
         if self.start_time is None:
             return False
         return self.start_time < timezone.now()
+
+    def clean(self):
+        if self.start_time and self.end_time:
+            if self.end_time <= self.start_time:
+                raise ValidationError('End time must be after start time')
+
+    @property
+    def duration(self):
+        if self.start_time and self.end_time:
+            return self.end_time - self.start_time
+        return timedelta(0)
+
+    def has_conflict(self):
+        overlapping = TimeSlot.objects.filter(
+            product=self.product,
+            start_time__lt=self.end_time,
+            end_time__gt=self.start_time
+        ).exclude(id=self.id)
+        return overlapping.exists()

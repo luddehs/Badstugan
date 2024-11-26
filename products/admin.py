@@ -40,8 +40,6 @@ class TimeSlotAdmin(admin.ModelAdmin):
     readonly_fields = ('is_past',)
 
     def is_past(self, obj):
-        if not obj or not obj.start_time:
-            return False
         return obj.is_past
     is_past.boolean = True
     is_past.short_description = 'Past Time Slot'
@@ -50,13 +48,6 @@ class TimeSlotAdmin(admin.ModelAdmin):
         if obj and obj.is_past:
             return self.readonly_fields + ('start_time', 'end_time')
         return self.readonly_fields
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
-        # Make start_time and end_time required
-        form.base_fields['start_time'].required = True
-        form.base_fields['end_time'].required = True
-        return form
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
