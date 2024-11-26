@@ -71,7 +71,13 @@
                 <h1 class="display-4 mb-4">{{ product.name }}</h1>
                 
                 <div class="price-tag mb-4">
-                    <h2 class="text-primary">${{ product.price }}</h2>
+                    <h2 class="text-primary">
+                        {% if product.category.name == 'shared-sauna' %}
+                            ${{ product.price }} per person
+                        {% else %}
+                            ${{ product.price }} per session
+                        {% endif %}
+                    </h2>
                 </div>
 
                 <div class="product-details mb-4">
