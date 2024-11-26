@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Category(models.Model):
 
@@ -45,3 +46,21 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Image {self.order} for {self.product.name}"
+
+class TimeSlot(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='time_slots')
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    is_booked = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['start_time']
+
+    def __str__(self):
+        return f"{self.product.name} - {self.start_time.strftime('%Y-%m-%d %H:%M')}"
+
+    @property
+    def is_past(self):
+        if self.start_time is None:
+            return False
+        return self.start_time < timezone.now()
