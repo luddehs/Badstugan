@@ -114,7 +114,7 @@
                             <small id="duration_display" class="form-text text-muted"></small>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12" id="guests_section" style="display: none;">
                             <p class="mt-3"><strong>Number of Guests:</strong></p>
                             <div class="form-group w-50">
                                 <div class="input-group">
@@ -190,15 +190,22 @@ document.getElementById('booking_date').addEventListener('change', function() {
 document.getElementById('time_slot').addEventListener('change', function() {
     const selectedOption = this.options[this.selectedIndex];
     const quantityInput = document.getElementById('id_qty_{{ product.id }}');
-    const remainingCapacity = selectedOption.dataset.remainingCapacity;
-    const sessionLimit = parseInt('{{ product.session_limit }}');
+    const guestsSection = document.getElementById('guests_section');
     
-    if (remainingCapacity) {
-        const maxGuests = Math.min(sessionLimit, remainingCapacity);
-        quantityInput.max = maxGuests;
-        quantityInput.value = Math.min(quantityInput.value, maxGuests);
-        document.getElementById('capacity_display').textContent = 
-            `Available spots: ${remainingCapacity} (Max ${sessionLimit} per booking)`;
+    if (this.value) {  // If a time slot is selected
+        const remainingCapacity = selectedOption.dataset.remainingCapacity;
+        const sessionLimit = parseInt('{{ product.session_limit }}');
+        
+        if (remainingCapacity) {
+            const maxGuests = Math.min(sessionLimit, remainingCapacity);
+            quantityInput.max = maxGuests;
+            quantityInput.value = Math.min(quantityInput.value, maxGuests);
+            document.getElementById('capacity_display').textContent = 
+                `Available spots: ${remainingCapacity} (Max ${sessionLimit} per booking)`;
+            guestsSection.style.display = 'block';  // Show the guests section
+        }
+    } else {
+        guestsSection.style.display = 'none';  // Hide the guests section if no time slot is selected
     }
 });
 </script>
