@@ -19,8 +19,11 @@ class Command(BaseCommand):
         start_date = timezone.now().date()
         end_date = start_date + timedelta(days=options['days'])
         
-        shared_saunas = Product.objects.filter(category__name='shared-sauna')
-        for product in shared_saunas:
+        saunas = Product.objects.filter(
+            category__name__in=['shared-sauna', 'private-sauna']
+        )
+        
+        for product in saunas:
             generate_time_slots(product, start_date, end_date)
             self.stdout.write(
                 self.style.SUCCESS(f'Generated slots for {product.name}')

@@ -5,6 +5,7 @@ from .models import Product, Category, ProductImage, TimeSlot
 from .utils import generate_time_slots
 from datetime import datetime, timedelta
 from django.utils import timezone
+from django.shortcuts import render
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
@@ -15,7 +16,6 @@ class TimeSlotInline(admin.TabularInline):
     extra = 1
     fields = ('start_time', 'end_time', 'is_booked')
     ordering = ('start_time',)
-
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'sku',
@@ -40,23 +40,63 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('image_url', 'image')
         }),
     )
-    actions = ['generate_next_week_slots']
+    actions = ['generate_future_slots']
 
-    def generate_next_week_slots(self, request, queryset):
-        start_date = timezone.now().date()
-        end_date = start_date + timedelta(days=7)
+    def generate_future_slots(self, request, queryset):
+        from django.core.exceptions import ValidationError
+        from django import forms
         
-        slots_created = 0
-        for product in queryset:
-            if product.category and product.category.name == 'shared-sauna':
-                generate_time_slots(product, start_date, end_date)
-                slots_created += 1
+        # Get the latest existing time slot for reference
+        latest_slots = {
+            product: product.time_slots.order_by('-end_time').first()
+            for product in queryset
+        }
         
-        self.message_user(
+        # If no slots exist, start from tomorrow
+        start_dates = {
+            product: (latest_slots[product].end_time.date() + timedelta(days=1))
+            if latest_slots[product]
+            else (timezone.now().date() + timedelta(days=1))
+            for product in queryset
+        }
+
+        class WeeksForm(forms.Form):
+            _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+            weeks = forms.IntegerField(min_value=1, max_value=52, initial=2,
+                                     help_text="Number of weeks to generate slots for")
+
+        if 'apply' in request.POST:
+            form = WeeksForm(request.POST)
+            if form.is_valid():
+                weeks = form.cleaned_data['weeks']
+                slots_created = 0
+                
+                for product in queryset:
+                    if product.category and product.category.name == 'shared-sauna':
+                        start_date = start_dates[product]
+                        end_date = start_date + timedelta(weeks=weeks)
+                        
+                        generate_time_slots(product, start_date, end_date)
+                        slots_created += 1
+                
+                self.message_user(
+                    request,
+                    f'Generated {weeks} weeks of time slots for {slots_created} products, starting from their last slot'
+                )
+                return
+                
+        form = WeeksForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        return render(
             request,
-            f'Generated time slots for {slots_created} products'
+            'admin/generate_slots.html',
+            context={
+                'title': 'Generate future time slots',
+                'form': form,
+                'queryset': queryset,
+                'start_dates': start_dates
+            }
         )
-    generate_next_week_slots.short_description = "Generate next week's time slots"
+    generate_future_slots.short_description = "Generate future time slots"
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
