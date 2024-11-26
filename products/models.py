@@ -23,6 +23,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL, related_name="products")
     location = models.CharField(max_length=254, default="Unknown Location")
+    capacity = models.PositiveIntegerField(default=1, help_text="Maximum number of guests allowed")
     image_url = models.URLField(max_length=1024, blank=True, null=True)
     image = models.ImageField(upload_to="products/", blank=True, null=True)
 
@@ -85,3 +86,11 @@ class TimeSlot(models.Model):
             end_time__gt=self.start_time
         ).exclude(id=self.id)
         return overlapping.exists()
+
+class Booking(models.Model):
+    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE, related_name='bookings')
+    quantity = models.PositiveIntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Booking for {self.time_slot} - {self.quantity} guests"

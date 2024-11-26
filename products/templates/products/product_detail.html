@@ -88,6 +88,7 @@
                         {% if product.category %}
                             <p><i class="fas fa-tag text-muted"></i> {{ product.category.friendly_name }}</p>
                         {% endif %}
+                        <p><i class="fas fa-users text-muted"></i> Maximum capacity: {{ product.capacity }} guests</p>
                     </div>
                 </div>
 
@@ -163,7 +164,7 @@ document.getElementById('booking_date').addEventListener('change', function() {
                 data.time_slots.forEach(slot => {
                     const option = document.createElement('option');
                     option.value = slot.id;
-                    option.textContent = `${slot.time} (${slot.duration} hours)`;
+                    option.textContent = `${slot.time} (${slot.duration} hours) - ${slot.remaining_capacity} spots left`;
                     timeSlotSelect.appendChild(option);
                 });
             }
