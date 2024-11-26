@@ -49,7 +49,8 @@ def get_available_slots(request, product_id):
 
     slots_data = [{
         'id': slot.id,
-        'time': slot.start_time.strftime('%H:%M')
+        'time': f"{slot.start_time.strftime('%H:%M')} - {slot.end_time.strftime('%H:%M')}",
+        'duration': f"{slot.duration.total_seconds() / 3600:.1f}"
     } for slot in available_slots]
 
     return JsonResponse({'time_slots': slots_data})

@@ -103,6 +103,7 @@
                             <select class="form-control" id="time_slot" name="time_slot" required disabled>
                                 <option value="">Please select a date first</option>
                             </select>
+                            <small id="duration_display" class="form-text text-muted"></small>
                         </div>
 
                         <div class="col-12">
@@ -139,11 +140,12 @@ document.getElementById('booking_date').addEventListener('change', function() {
     const date = this.value;
     const productId = '{{ product.id }}';
     const timeSlotSelect = document.getElementById('time_slot');
+    const durationDisplay = document.getElementById('duration_display');
     
-    // Clear and disable time slot select
     timeSlotSelect.innerHTML = '<option value="">Loading available times...</option>';
+    timeSlotSelect.disabled = true;
+    durationDisplay.textContent = '';
     
-    // Fetch available time slots
     fetch(`/products/get-available-slots/${productId}/?date=${date}`)
         .then(response => response.json())
         .then(data => {
@@ -154,7 +156,7 @@ document.getElementById('booking_date').addEventListener('change', function() {
                 data.time_slots.forEach(slot => {
                     const option = document.createElement('option');
                     option.value = slot.id;
-                    option.textContent = slot.time;
+                    option.textContent = `${slot.time} (${slot.duration} hours)`;
                     timeSlotSelect.appendChild(option);
                 });
             }

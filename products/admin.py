@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.contrib import admin
 from .models import Product, Category, ProductImage, TimeSlot
 
@@ -32,22 +33,29 @@ class CategoryAdmin(admin.ModelAdmin):
     )
 
 class TimeSlotAdmin(admin.ModelAdmin):
-    list_display = ('product', 'start_time', 'end_time', 'is_booked', 'is_past')
+    list_display = ('product', 'start_time', 'end_time', 'duration_display', 'is_booked', 'is_past', 'has_conflicts')
     list_filter = ('product', 'is_booked', 'start_time')
     search_fields = ('product__name',)
     ordering = ('start_time',)
     list_editable = ('is_booked',)
-    readonly_fields = ('is_past',)
+    readonly_fields = ('is_past', 'duration_display', 'has_conflicts')
 
-    def is_past(self, obj):
-        return obj.is_past
-    is_past.boolean = True
-    is_past.short_description = 'Past Time Slot'
+    def duration_display(self, obj):
+        hours = obj.duration.total_seconds() / 3600
+        return f"{hours:.1f} hours"
+    duration_display.short_description = 'Duration'
 
-    def get_readonly_fields(self, request, obj=None):
-        if obj and obj.is_past:
-            return self.readonly_fields + ('start_time', 'end_time')
-        return self.readonly_fields
+    def has_conflicts(self, obj):
+        return obj.has_conflict()
+    has_conflicts.boolean = True
+    has_conflicts.short_description = 'Has Conflicts'
+
+    def save_model(self, request, obj, form, change):
+        try:
+            obj.clean()
+            super().save_model(request, obj, form, change)
+        except ValidationError as e:
+            form.add_error(None, e)
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
