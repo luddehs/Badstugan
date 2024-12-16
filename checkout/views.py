@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 
 def checkout(request):
@@ -13,7 +13,6 @@ def checkout(request):
 
 def add_to_checkout(request, item_id):
     """ Add a quantity of the specified product to the checkout """
-
     quantity = int(request.POST.get('quantity'))
     time_slot = request.POST.get('time_slot')
     booking_date = request.POST.get('booking_date')
@@ -28,3 +27,15 @@ def add_to_checkout(request, item_id):
 
     request.session['checkout'] = checkout
     return redirect(redirect_url)
+
+def remove_from_checkout(request, item_id):
+    """Remove the item from the shopping bag"""
+    try:
+        checkout = request.session.get('checkout', {})
+        checkout.pop(item_id)
+
+        request.session['checkout'] = checkout
+        return HttpResponse(status=200)
+
+    except Exception as e:
+        return HttpResponse(status=500)
