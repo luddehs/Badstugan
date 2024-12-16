@@ -22,8 +22,43 @@
 
         <div class="row">
             <div class="col">
-                {% if bag_items %}
-                    <div class="table-responsive rounded"></div>
+                {% if checkout_items %}
+                    <div class="table-responsive rounded">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Booking Info</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Time Slot</th>
+                                    <th scope="col">Guests</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in checkout_items %}
+                                    <tr>
+                                        <td>
+                                            <p class="my-0"><strong>{{ item.product.name }}</strong></p>
+                                            <p class="my-0 small text-muted">Location: {{ item.product.location }}</p>
+                                        </td>
+                                        <td>{{ item.booking_date }}</td>
+                                        <td>
+                                            {{ item.time_slot.start_time|time:"H:i" }} - 
+                                            {{ item.time_slot.end_time|time:"H:i" }}
+                                        </td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>${{ item.product.price }}</td>
+                                        <td>${{ item.subtotal }}</td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="5" class="text-right"><strong>Total:</strong></td>
+                                    <td><strong>${{ grand_total }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 {% else %}
                     <p class="lead mb-5">No bookings to checkout.</p>
                     <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
