@@ -26,6 +26,7 @@ def add_to_checkout(request, item_id):
     }
 
     request.session['checkout'] = checkout
+    messages.success(request, "Successfully added item to checkout!")
     return redirect(redirect_url)
 
 def remove_from_checkout(request, item_id):
@@ -35,7 +36,9 @@ def remove_from_checkout(request, item_id):
         checkout.pop(item_id)
 
         request.session['checkout'] = checkout
+        messages.success(request, "Item removed from checkout")
         return HttpResponse(status=200)
 
     except Exception as e:
+        messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
