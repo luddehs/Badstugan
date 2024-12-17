@@ -81,7 +81,7 @@ class ProductAdmin(admin.ModelAdmin):
                 
                 self.message_user(
                     request,
-                    f'Generated {weeks} weeks of time slots for {slots_created} products, starting from their last slot'
+                    f'Generated {weeks} weeks of timeslots for {slots_created} products, starting from their last slot'
                 )
                 return
                 
@@ -90,13 +90,13 @@ class ProductAdmin(admin.ModelAdmin):
             request,
             'admin/generate_slots.html',
             context={
-                'title': 'Generate future time slots',
+                'title': 'Generate future timeslots',
                 'form': form,
                 'queryset': queryset,
                 'start_dates': start_dates
             }
         )
-    generate_future_slots.short_description = "Generate future time slots"
+    generate_future_slots.short_description = "Generate future timeslots"
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (

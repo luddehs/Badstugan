@@ -25,7 +25,7 @@ def add_to_checkout(request, item_id):
     }
 
     request.session['checkout'] = checkout
-    messages.success(request, "Successfully added item to checkout!")
+    messages.success(request, "Timeslot reserved! Complete your booking to confirm.")
     return redirect(redirect_url)
 
 def remove_from_checkout(request, item_id):
@@ -36,12 +36,12 @@ def remove_from_checkout(request, item_id):
         request.session['checkout'] = checkout
 
         if not checkout:
-            messages.success(request, "Checkout is now empty")
+            messages.success(request, "Your booking is now empty. Add a new timeslot to continue.")
             return HttpResponse(status=200)
         else:
-            messages.success(request, "Item removed from checkout")
+            messages.success(request, "Timeslot removed from your booking.")
             return HttpResponse(status=200)
 
     except Exception as e:
-        messages.error(request, f'Error removing item: {e}')
+        messages.error(request, f'An error occurred while removing the timeslot. Please try again. {e}')
         return HttpResponse(status=500)

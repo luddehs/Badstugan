@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 
 class Command(BaseCommand):
-    help = 'Generate time slots for shared saunas'
+    help = 'Generate timeslots for shared saunas'
 
     def add_arguments(self, parser):
         parser.add_argument(

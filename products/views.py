@@ -32,7 +32,7 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 def get_available_slots(request, product_id):
-    """ API view to get available time slots for a specific date """
+    """ API view to get available timeslots for a specific date """
     date_str = request.GET.get('date')
     if not date_str:
         return JsonResponse({'error': 'Date is required'}, status=400)

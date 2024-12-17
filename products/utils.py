@@ -4,7 +4,7 @@ from .models import TimeSlot
 
 def generate_time_slots(product, start_date, end_date=None, slot_duration=timedelta(hours=2)):
     """
-    Generate time slots for a product within the category's opening hours
+    Generate timeslots for a product within the category's opening hours
     """
     if not end_date:
         end_date = start_date
