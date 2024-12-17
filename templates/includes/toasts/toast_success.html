@@ -8,6 +8,18 @@
         </button>
     </div>
     <div class="toast-body bg-white">
-        {{ message }}        
+        {{ message }}
+        {% if grand_total %}
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'checkout' %}" class="btn btn-black btn-block rounded-0">
+                        <span class="text-uppercase">Go To Secure Checkout</span>
+                        <span class="icon">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
     </div>
 </div>
