@@ -9,14 +9,16 @@ def checkout_contents(request):
     product_count = 0
     checkout = request.session.get('checkout', {})
 
-    for item_id, item_data in checkout.items():
+    for checkout_item_key, item_data in checkout.items():
+        product_id = checkout_item_key.split('_')[0]
+        
         if isinstance(item_data, dict):
-            product = get_object_or_404(Product, pk=item_id)
+            product = get_object_or_404(Product, pk=product_id)
             time_slot = get_object_or_404(TimeSlot, pk=item_data['time_slot'])
             total += item_data['quantity'] * product.price
             product_count += item_data['quantity']
             checkout_items.append({
-                'item_id': item_id,
+                'item_id': checkout_item_key,
                 'quantity': item_data['quantity'],
                 'product': product,
                 'time_slot': time_slot,

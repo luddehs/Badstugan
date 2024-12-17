@@ -18,7 +18,9 @@ def add_to_checkout(request, item_id):
     redirect_url = request.POST.get('redirect_url')
     checkout = request.session.get('checkout', {})
 
-    checkout[item_id] = {
+    checkout_item_key = f"{item_id}_{time_slot}"
+
+    checkout[checkout_item_key] = {
         'quantity': quantity,
         'time_slot': time_slot,
         'booking_date': booking_date
