@@ -20,14 +20,17 @@ def add_to_checkout(request, item_id):
 
     checkout_item_key = f"{item_id}_{time_slot}"
 
-    checkout[checkout_item_key] = {
-        'quantity': quantity,
-        'time_slot': time_slot,
-        'booking_date': booking_date
-    }
+    if checkout_item_key in checkout:
+        messages.error(request, "This timeslot is already in your booking!")
+    else:
+        checkout[checkout_item_key] = {
+            'quantity': quantity,
+            'time_slot': time_slot,
+            'booking_date': booking_date
+        }
+        request.session['checkout'] = checkout
+        messages.success(request, "Timeslot reserved! Complete your booking to confirm.")
 
-    request.session['checkout'] = checkout
-    messages.success(request, "Timeslot reserved! Complete your booking to confirm.")
     return redirect(redirect_url)
 
 def remove_from_checkout(request, item_id):
