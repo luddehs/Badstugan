@@ -6,7 +6,6 @@ def checkout(request):
     checkout = request.session.get('checkout', {})
     
     if not checkout:
-        messages.error(request, "There's nothing in your checkout at the moment")
         return redirect('products')
         
     return render(request, 'checkout/checkout.html')
@@ -34,10 +33,14 @@ def remove_from_checkout(request, item_id):
     try:
         checkout = request.session.get('checkout', {})
         checkout.pop(item_id)
-
         request.session['checkout'] = checkout
-        messages.success(request, "Item removed from checkout")
-        return HttpResponse(status=200)
+
+        if not checkout:
+            messages.success(request, "Checkout is now empty")
+            return HttpResponse(status=200)
+        else:
+            messages.success(request, "Item removed from checkout")
+            return HttpResponse(status=200)
 
     except Exception as e:
         messages.error(request, f'Error removing item: {e}')
