@@ -14,6 +14,8 @@ def payments(request):
     template = 'payments/payments.html'
     context = {
         'order_form': order_form,
+        'stripe_public_key': 'pk_test_51PAWkSRpX9AQTc0CK5NATR48Mhb3biWJvZqbBVZLM130nK8HIWQ3ae0xDkBmfinvfTy8KvsgAMzaEYPSzrnZRaqb00wmkhxFsX',
+        'client_secret': 'test client secret'
     }
 
     return render(request, template, context)
