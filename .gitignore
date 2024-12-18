@@ -1,14 +1,33 @@
-core.Microsoft*
-core.mongo*
-core.python*
-env.py
+# System and editor files
 __pycache__/
 *.py[cod]
+
+# Node.js
 node_modules/
+
+# IDEs and editors
 .github/
-cloudinary_python.txt
-*.sqlite3
-*.pyc
+.vscode/
+.idea/
+
+# Python virtual environments
 venv/
 env/
 .venv/
+
+# Cloudinary (if applicable)
+cloudinary_python.txt
+
+# SQLite
+*.sqlite3
+
+# Compiled Python files
+*.pyc
+
+# Environment files
+.env
+
+# Project-specific ignores
+core.Microsoft*
+core.mongo*
+core.python*
