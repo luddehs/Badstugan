@@ -86,7 +86,7 @@ class Order(models.Model):
         """
         Check if pending order is expired (default 15 minutes)
         """
-        if self.status == 'pending':
+        if self.status == 'pending' and self.created_at:
             expiry_time = self.created_at + timedelta(minutes=expiry_minutes)
             return timezone.now() >= expiry_time
         return False
@@ -95,7 +95,7 @@ class Order(models.Model):
         """
         Additional validation for orders
         """
-        if self.is_expired():
+        if self.created_at and self.is_expired():
             self.status = 'cancelled'
             self.save()
             raise ValidationError("Order has expired")
