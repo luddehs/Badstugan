@@ -34,7 +34,7 @@ def payments(request):
 
     if request.method == 'POST':
         checkout = request.session.get('checkout', {})
-
+        
         form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
@@ -48,7 +48,11 @@ def payments(request):
         }
         order_form = OrderForm(form_data)
         if order_form.is_valid():
-            order = order_form.save()
+            order = order_form.save(commit=False)
+            pid = request.POST.get('client_secret').split('_secret')[0]
+            order.stripe_pid = pid
+            order.original_checkout = json.dumps(checkout)
+            order.save()
             for checkout_item_key, item_data in checkout.items():
                 try:
                     product_id = checkout_item_key.split('_')[0]
@@ -77,11 +81,11 @@ def payments(request):
                     order.delete()
                     return redirect(reverse('checkout'))
 
-            request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('payments_success', args=[order.order_number]))
-        else:
-            messages.error(request, 'There was an error with your form. \
-                Please double check your information.')
+                request.session['save_info'] = 'save-info' in request.POST
+                return redirect(reverse('payments_success', args=[order.order_number]))
+            else:
+                messages.error(request, 'There was an error with your form. \
+                    Please double check your information.')
     else:
         checkout = request.session.get('checkout', {})
         if not checkout:
