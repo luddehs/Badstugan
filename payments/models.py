@@ -116,9 +116,10 @@ class OrderLineItem(models.Model):
         if self.time_slot.is_past:
             raise ValidationError("Cannot book a time slot in the past")
 
-        # Check if time slot is already booked
-        if self.time_slot.is_booked:
-            raise ValidationError("This time slot is already booked")
+        # Skip the "already booked" validation for existing line items
+        if self._state.adding:
+            if self.time_slot.is_booked:
+                raise ValidationError("This time slot is already booked")
 
         # Check if quantity exceeds session limit
         if self.quantity > self.product.session_limit:
@@ -129,6 +130,8 @@ class OrderLineItem(models.Model):
         # Check if quantity exceeds remaining capacity
         total_bookings = self.time_slot.bookings.aggregate(
             total=Sum('quantity'))['total'] or 0
+        if not self._state.adding:  # Subtract current quantity for existing bookings
+            total_bookings -= self.quantity
         remaining_capacity = self.product.capacity - total_bookings
         if self.quantity > remaining_capacity:
             raise ValidationError(
