@@ -29,9 +29,16 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com', '8000-luddehs-badstugan-82i36uo6ijm.ws.codeinstitute-ide.net']
+ALLOWED_HOSTS = [
+    'localhost', 
+    '127.0.0.1', 
+    '.herokuapp.com', 
+    '8000-luddehs-baksidan-jeaoagnmqzg.ws.codeinstitute-ide.net'
+]
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-luddehs-badstugan-82i36uo6ijm.ws.codeinstitute-ide.net']
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-luddehs-baksidan-jeaoagnmqzg.ws.codeinstitute-ide.net'
+]
 
 # Application definition
 
