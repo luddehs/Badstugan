@@ -1,14 +1,16 @@
 {% extends "account/base_entrance.html" %}
 {% load i18n %}
-{% load allauth %}
 {% block head_title %}
     {% trans "Verify Your Email Address" %}
 {% endblock head_title %}
-{% block content %}
-    {% element h1 %}
-        {% trans "Verify Your Email Address" %}
-    {% endelement %}
-    {% element p %}
-        {% blocktrans %}We have sent an email to you for verification. Follow the link provided to finalize the signup process. If you do not see the verification email in your main inbox, check your spam folder. Please contact us if you do not receive the verification email within a few minutes.{% endblocktrans %}
-    {% endelement %}
-{% endblock content %}
+{% block inner_content %}
+    <hr>
+    <h2 class="logo-font mb-4">{% trans "Verify Your Email Address" %}</h2>
+    <hr>
+    <p>{% blocktrans %}We have sent an email to you for verification. Follow the link provided to finalize the signup process. If you do not see the verification email in your main inbox, check your spam folder. Please contact us if you do not receive the verification email within a few minutes.{% endblocktrans %}</p>
+    <div class="text-center mt-3">
+        <a href="{% url 'home' %}" class="btn btn-outline-black rounded-0">
+            {% trans "Home" %}
+        </a>
+    </div>
+{% endblock inner_content %}
