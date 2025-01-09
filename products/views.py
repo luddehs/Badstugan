@@ -4,6 +4,7 @@ from django.utils import timezone
 from datetime import datetime
 from .models import Product, Category, TimeSlot, Booking
 from django.db import models
+from .forms import ProductForm
 
 def all_products(request):
     """ A view to show all products with optional category filtering """
@@ -67,3 +68,13 @@ def get_available_slots(request, product_id):
             })
 
     return JsonResponse({'time_slots': slots_data})
+
+def add_product(request):
+    """ Add a product to the store """
+    form = ProductForm()
+    template = 'products/add_product.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
