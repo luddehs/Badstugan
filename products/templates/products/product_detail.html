@@ -68,8 +68,13 @@
         <!-- Right Column - Product Details -->
         <div class="col-md-6">
             <div class="product-info p-4 bg-white rounded shadow">
-                <h1 class="display-4 mb-4">{{ product.name }}</h1>
-                
+                <h1 class="display-4 mb-3">{{ product.name }}</h1>
+                {% if request.user.is_superuser %}
+                    <div class="mb-4">
+                        <a href="{% url 'edit_product' product.id %}">Edit</a> | 
+                        <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                    </div>
+                {% endif %}
                 <div class="price-tag mb-4">
                     <h2 class="text-primary">
                         {% if product.category.name == 'shared-sauna' %}
@@ -79,7 +84,6 @@
                         {% endif %}
                     </h2>
                 </div>
-
                 <div class="product-details mb-4">
                     <p class="lead">{{ product.description }}</p>
                     
